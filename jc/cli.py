@@ -520,6 +520,7 @@ def main():
     debug = 'd' in options
     verbose_debug = True if options.count('d') > 1 else False
     mono = 'm' in options
+    color = 'c' in options
     help_me = 'h' in options
     pretty = 'p' in options
     quiet = 'q' in options
@@ -638,7 +639,8 @@ def main():
 
     # output the json
     try:
-        print(json_out(result, pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_output()))
+        piped_out = piped_output() and not color
+        print(json_out(result, pretty=pretty, env_colors=jc_colors, mono=mono, piped_out=piped_out))
         sys.exit(combined_exit_code(magic_exit_code, 0))
 
     except Exception:
